@@ -1,19 +1,19 @@
 from app import app
 from app.utils import extractElement
 
-class opinion:
+class Opinion:
 
     selectors = {
-        "Author":  ["span.user-post__author-name"] ,
-        "Recomendation":  ["span.user-post__author-recomendation > em"],
-        "Stars":  ["span.user-post__score-count"],
-        "Content": ["div.user-post__text"],
-        "Advantages": ["div.review-feature__col:has(> div[class*=\"positives\"])"],
-        "Disadvantages":  ["div.review-feature__col:has(> div[class*=\"negatives\"])"],
-        "Helpful":  ["button.vote-yes > span"],
-        "Unhelpful": ["button.vote-no > span"],
-        "Publish Date": ["span.user-post__published > time:nth-child(1)", "datetime"],
-        "Purhcase Date": ["span.user-post__published > time:nth-child(2)", "datetime"]
+        "author":  ["span.user-post__author-name"] ,
+        "recomendation":  ["span.user-post__author-recomendation > em"],
+        "stars":  ["span.user-post__score-count"],
+        "content": ["div.user-post__text"],
+        "advantages": ["div.review-feature__col:has(> div[class*=\"positives\"])"],
+        "disadvantages":  ["div.review-feature__col:has(> div[class*=\"negatives\"])"],
+        "helpful":  ["button.vote-yes > span"],
+        "unhelpful": ["button.vote-no > span"],
+        "publishDate": ["span.user-post__published > time:nth-child(1)", "datetime"],
+        "purchaseDate": ["span.user-post__published > time:nth-child(2)", "datetime"]
     }
 
     def __init__(self, opinionID=None, author=None, recomendation=None, stars=None, content=None, advantages=None, disadvantages=None, helpful=None, unhelpful=None, publishDate=None, purchaseDate=None):
@@ -51,4 +51,10 @@ class opinion:
         self.unhelpful = int(self.unhelpful)
 
     def __str__(self):
-        pass
+        return 'opinionID: '+str(self.opinionID)+'<br>'+'<br>'.join(key+": "+str(getattr(self, key)) for key in self.selectors.keys())
+
+    def __dict__(self):
+        return {'opinoinID': self.opinionID}.update({key: getattr(self, key)
+            for key in self.selectors.keys()})
+        
+
