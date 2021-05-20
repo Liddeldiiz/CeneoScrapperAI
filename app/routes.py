@@ -6,11 +6,12 @@ from flask import request, render_template, redirect, url_for
 import requests
 import json
 
+app.config['SECRET_KEY'] = "NotSoSpecialSecretKey"
+
 @app.route('/')
 @app.route('/index')
 def index():
-    opinion1 = Opinion()
-    return str(opinion1)
+    return render_template('main.html.jinja')
 
 @app.route('/example/<var>')
 def example(var):
@@ -19,7 +20,7 @@ def example(var):
 @app.route('/extract', methods=['GET', 'POST'])
 def extract():
     form = ProductForm()
-    if request.method == 'POST' and form.validate():
+    if request.method == 'POST' and form.validate_on_submit():
         product = Product(request.form['productID'])
         respons = requests.get(product.opinionsPageURL())
         if respons.status_code == 200:
@@ -28,7 +29,7 @@ def extract():
             return redirect(url_for('product', productID=product.productID))
         else:
             form.productID.errors.append("For given product ID there is no product")
-    return render_template('extract.html', form=form)
+    return render_template('extract.html.jinja', form=form)
 
 #HOMEWORK: Analyze the function above!!!
 

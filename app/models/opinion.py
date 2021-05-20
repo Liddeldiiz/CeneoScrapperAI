@@ -31,7 +31,7 @@ class Opinion:
 
     def extractOpinion(self, opinionTree):
         for key, value in self.selectors.items():
-            setattr(self, key, extractElement(opinionTree, *values))
+            setattr(self, key, extractElement(opinionTree, *value))
         self.opinionID = opinionTree["data-entry-id"]
         self.transformOpinion()
 

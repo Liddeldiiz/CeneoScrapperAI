@@ -49,14 +49,14 @@ class Product:
         for opinion in opinions:
             singleOpinion = {
                 key:self.extractFeature(opinion, *args)
-                for key, args in selectors.items()
+                for key, args in Opinion.selectors.items()
             }
             singleOpinion["Opinion ID"] = opinion["data-entry-id"]
             opinionsList.append(singleOpinion)
         return opinionsList
 
     def exportProduct(self):
-        with open("opinions/{}.json".format(self.productID), "w", encoding="UTF-8") as jf:
+        with open("app/opinions/{}.json".format(self.productID), "w", encoding="UTF-8") as jf:
             json.dump(dict(self), jf, indent=4, ensure_ascii=False)
 
     def __str__(self):
@@ -67,5 +67,5 @@ class Product:
         return {
             "productID": self.productID, 
             "name": self.productName,
-            "opinoins": [dict(opinion) for opinion in self.opinions]
+            "opinoins": [opinion.__dict__() for opinion in self.opinions]
         }
