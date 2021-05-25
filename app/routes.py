@@ -13,10 +13,6 @@ app.config['SECRET_KEY'] = "NotSoSpecialSecretKey"
 def index():
     return render_template('main.html.jinja')
 
-@app.route('/example/<var>')
-def example(var):
-    pass
-
 @app.route('/extract', methods=['GET', 'POST'])
 def extract():
     form = ProductForm()

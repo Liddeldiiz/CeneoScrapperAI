@@ -1,4 +1,4 @@
-from app import app
+from app.__init__ import app # app module not importing into this file
 from app.utils import extractElement
 from app.models.opinion import Opinion
 import requests
@@ -26,34 +26,11 @@ class Product:
             pageDOM = BeautifulSoup(respons.text, 'html.parser')
             opinions = pageDOM.select("div.js_product-review")
             for opinion in opinions:
-                self.opinions.append(Opinion().extractOpinion(opinion))
+                self.opinions.append(Opinion.extractOpinion(opinion))
             try:
                 url = self.url_pre + extractElement(pageDOM, 'a.pagination__next', "href")
             except IndexError:
                 url = None
-
-    def productIDextraction(self):
-        url = input()#"https://www.ceneo.pl/96961305#tab=reviews"
-
-        fullURLList = url.split("https://www.ceneo.pl/")
-        partURLList = fullURLList[1].split("#tab=reviews")
-        productID = partURLList[0]
-        print(productID)
-        return productID
-
-    def productNameExtraction(self):
-        pass
-
-    def extractOpinions(self, opinions):
-        opinionsList = []
-        for opinion in opinions:
-            singleOpinion = {
-                key:self.extractFeature(opinion, *args)
-                for key, args in Opinion.selectors.items()
-            }
-            singleOpinion["Opinion ID"] = opinion["data-entry-id"]
-            opinionsList.append(singleOpinion)
-        return opinionsList
 
     def exportProduct(self):
         with open("app/opinions/{}.json".format(self.productID), "w", encoding="UTF-8") as jf:

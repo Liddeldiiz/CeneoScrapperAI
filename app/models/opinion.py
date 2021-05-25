@@ -1,4 +1,4 @@
-from app import app
+from app.__init__ import app # app module not importing into this file
 from app.utils import extractElement
 
 class Opinion:
@@ -54,7 +54,6 @@ class Opinion:
         return 'opinionID: '+str(self.opinionID)+'<br>'+'<br>'.join(key+": "+str(getattr(self, key)) for key in self.selectors.keys())
 
     def __dict__(self):
-        return {'opinoinID': self.opinionID}.update({key: getattr(self, key)
-            for key in self.selectors.keys()})
+        return {'opinoinID': self.opinionID}.update({key: getattr(self, key) for key in self.selectors.keys()})
         
 
