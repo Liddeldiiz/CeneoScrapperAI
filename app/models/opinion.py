@@ -1,4 +1,4 @@
-from app.__init__ import app # app module not importing into this file
+from app import app # app module not importing into this file
 from app.utils import extractElement
 
 class Opinion:
@@ -33,7 +33,8 @@ class Opinion:
         for key, value in self.selectors.items():
             setattr(self, key, extractElement(opinionTree, *value))
         self.opinionID = opinionTree["data-entry-id"]
-        self.transformOpinion()
+        #self.transformOpinion()
+        return self
 
     def transformOpinion(self):
         try: 
@@ -49,11 +50,12 @@ class Opinion:
         self.content = self.content.replace("\n", " ").replace("\r", " ").replace("\t", " ")
         self.helpful = int(self.helpful)
         self.unhelpful = int(self.unhelpful)
+        return self
 
     def __str__(self):
         return 'opinionID: '+str(self.opinionID)+'<br>'+'<br>'.join(key+": "+str(getattr(self, key)) for key in self.selectors.keys())
 
-    def __dict__(self):
-        return {'opinoinID': self.opinionID}.update({key: getattr(self, key) for key in self.selectors.keys()})
+    def toDict(self):
+        return {'opinoinID': self.opinionID} | {key: getattr(self, key) for key in self.selectors.keys()}
         
 

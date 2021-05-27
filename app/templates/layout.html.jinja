@@ -9,24 +9,25 @@
 
 </head>
 <body style="background-color: #3a3c3f;">
-    <div class="collapse" id="navbarToggleExternalContent">
-        <div class="bg-dark p-4">
-            <a href="./main"><button type="button" class="btn btn-primary">HOME</button></a>
-            <a href="./extract"><button type="button" class="btn btn-primary">Extract</button></a>
-            <a href="product"><button type="button" class="btn btn-primary">Product</button></a>
-            <a href="author"><button type="button" class="btn btn-primary">About us</button></a>
-        
-        
+    <div style="background-color: #212529;">
+      <h1 style="color: #E9F1F7; float: right; margin-right: 10px;">Ceneo Scrapper</h1>
+      <div class="collapse" id="navbarToggleExternalContent">
+          <div class="bg-dark p-4">
+              <a href="{{ url_for('index') }}"><button type="button" class="btn btn-primary">HOME</button></a>
+              <a href="{{ url_for('extract') }}"><button type="button" class="btn btn-primary">Extract</button></a>
+              <a href="{{ url_for('products') }}"><button type="button" class="btn btn-primary">Products</button></a>
+              <a href="{{ url_for('author') }}"><button type="button" class="btn btn-primary">About us</button></a>
+          
+          </div>
         </div>
+        <nav class="navbar navbar-dark bg-dark">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon" style="float: left;"></span>
+            </button>
+          </div>
+        </nav>
       </div>
-      <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" style="float:left;">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-        <div><h1 style="color:white; float:right;">Ceneo Scrapper</h1></div>
-      </nav>
 
       <div class="container" style="padding-top: 50px; padding-bottom: 100px;">
         <div class="row">

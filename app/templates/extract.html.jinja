@@ -1,8 +1,7 @@
 {% extends "layout.html.jinja" %}
 
 {% block middle %}
-    <h2> Opinions extraction </h2>
-    <h3> {{ test }} </h3>
+    <h2 style="color: #E9F1F7;"> Opinions extraction </h2>
     {% if form.productID.errors %}
         <div class="alert alert-danger" role="alert">
             {% for error in form.productID.errors %}
@@ -10,7 +9,7 @@
             {% endfor %}
         </div>
     {% endif %}
-    <form method="POST" action="{{ url_for('extract') }}">
+    <form method="POST" action="{{ url_for('extract') }}" style="color: #E9F1F7;">
         {{ form.csrf_token }}
         {{ form.productID.label }} {{ form.productID(size=20) }}
         {{ form.submit(class_="btn btn-info")}}
