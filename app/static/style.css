@@ -1,0 +1,28 @@
+body {
+    background-color: #3a3c3f;
+}
+
+/* navbar css on top of bootstrap */
+
+.navbar-color {
+    background-color: #212529;
+}
+
+.navbar-color h1 {
+    color: #E9F1F7;
+    float: right;
+    margin-right: 10px;
+}
+
+.navbar-toggler-icon {
+    float: left;
+}
+
+/* everything below the navbar */
+
+.container {
+    padding-top: 50px;
+    padding-bottom: 100px;
+}
+
+

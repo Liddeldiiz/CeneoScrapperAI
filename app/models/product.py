@@ -25,6 +25,8 @@ class Product:
             respons = requests.get(url)
             pageDOM = BeautifulSoup(respons.text, 'html.parser')
             opinions = pageDOM.select("div.js_product-review")
+
+            self.productName = pageDOM.select('div.js_searchInGoogleTooltip')[0].text.strip()
             for opinion in opinions:
                 self.opinions.append(Opinion().extractOpinion(opinion).transformOpinion())
             try:
@@ -33,7 +35,7 @@ class Product:
                 url = None
 
     def exportProduct(self):
-        with open("app/opinions/{}.json".format(self.productID), "w", encoding="UTF-8") as jf:
+        with open("app/opinions/{}.json".format(self.productName + "_" + self.productID), "w", encoding="UTF-8") as jf:
             json.dump(self.toDict(), jf, indent=4, ensure_ascii=False)
 
     def __str__(self):
