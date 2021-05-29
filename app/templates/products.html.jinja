@@ -4,7 +4,7 @@
     <h2 style="color: #E9F1F7;"> Products </h2>
     <ul class="list-group list-group-flush">
     {% for product in productsList %}
-        <li class="list-group-item"><a href="{{url_for('product', productID=product)}}">{{ product }}</li>
+        <li class="list-group-item" style="background-color: #212529;"><a href="{{url_for('product', productID=product)}}" style="color: #E9F1F7;">{{ product }}</li>
     {% endfor %}
     </ul>
 {% endblock middle %}
