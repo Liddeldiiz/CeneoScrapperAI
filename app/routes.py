@@ -32,10 +32,16 @@ def extract():
 def product(productID):
     return render_template('product.html.jinja', productID=productID)
 
+@app.route('/brands/<productID>')
+def brands(productID):
+    #return "you have reached the brand page"
+    productsList = [x.split(".")[0] for x in listdir("app/opinions/{}".format(productID))]
+    return render_template('brands.html.jinja', productsList=productsList)
+
 @app.route('/products')
 def products():
-    productsList = [x.split(".")[0] for x in listdir("app/opinions")]
-    return render_template('products.html.jinja', productsList=productsList)
+    brandList = [x.split(".")[0] for x in listdir("app/opinions")]
+    return render_template('products.html.jinja', brandList=brandList)
 
 @app.route('/author')
 def author():

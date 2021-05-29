@@ -4,6 +4,7 @@ from app.models.opinion import Opinion
 import requests
 import json
 from bs4 import BeautifulSoup
+import os
 
 class Product:
 
@@ -35,8 +36,24 @@ class Product:
                 url = None
 
     def exportProduct(self):
-        with open("app/opinions/{}.json".format(self.productName + "_" + self.productID), "w", encoding="UTF-8") as jf:
-            json.dump(self.toDict(), jf, indent=4, ensure_ascii=False)
+        directory = self.productName.split()[0]
+        directoryVar = len(directory)+1
+        productModel = self.productName[directoryVar:]
+        # EAFP - Easier to Ask for Forgivness than Permission
+        try:
+            productModel = productModel.replace('/', '-')
+        except AttributeError:
+            pass
+
+        try:
+            with open("app/opinions/{}/{}.json".format(directory, productModel + "_" + self.productID), "w", encoding="UTF-8") as jf:
+                json.dump(self.toDict(), jf, indent=4, ensure_ascii=False)
+        except OSError:
+            parent_dir = "D:\\Applied_informatics\\CeneoScrapperAI\\app\\opinions"
+            path = os.path.join(parent_dir, directory)
+            os.mkdir(path)
+            with open("app/opinions/{}/{}.json".format(directory, productModel + "_" + self.productID), "w", encoding="UTF-8") as jf:
+                json.dump(self.toDict(), jf, indent=4, ensure_ascii=False)
 
     def __str__(self):
         return '''productID: {}<br>
