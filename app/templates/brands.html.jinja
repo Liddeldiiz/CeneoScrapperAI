@@ -1,7 +1,7 @@
 {% extends "layout.html.jinja" %}
 
 {% block middle %}
-    <h2> Brands </h2>
+    <h2 class="title"> Brands </h2>
     <ul class="list-group">
         {% for product in productsList %}
             <li class="list-group-item" style="background-color: #212529;"><a href="{{url_for('product', productID=product)}}" style="color: #E9F1F7; text-decoration: none;">{{ product }}</li>

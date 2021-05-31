@@ -1,7 +1,7 @@
 {% extends "layout.html.jinja" %}
 
 {% block middle %}
-    <h2> Opinions extraction </h2>
+    <h2 class="title"> Opinions extraction </h2>
     {% if form.productID.errors %}
         <div class="alert alert-danger alert-danger alert-dismissible fade show" role="alert">
             {% for error in form.productID.errors %}

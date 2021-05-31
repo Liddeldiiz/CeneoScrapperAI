@@ -69,7 +69,37 @@ body {
 .title:hover {
     background-position: right;
 }
-  
+
+#pageTitle {
+    float: left;
+}
+
+.navbar {
+    float: right;
+}
+
+.navbar a {
+    display: block;
+    text-decoration: none;
+    font-size: 5px 20px;
+    font-family: arial;
+    color: #000000bb;
+    padding: 0 20px;
+    border-width: 3px;
+    border-style: solid;
+    border-image: 
+    linear-gradient(
+      to bottom, 
+      red, 
+      rgba(0, 0, 0, 0)
+    ) 1 100%;
+    transition: bottom-to-top 0.6s;
+}
+
+.navbar a.hover {
+    
+}
+
 .fun {
     color: white;
     border: 0;
@@ -85,4 +115,10 @@ body {
     background-position: right;
 }
 
+.container {
+    margin-top: 40px;
+}
 
+/* 
+Credits go to Kevin Powell and his Youtube channel, with his awesome content about css
+*/
