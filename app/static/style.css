@@ -49,7 +49,7 @@ body {
     box-shadow: 0 0 3em rgba(0, 0, 0, 0.15);
 }
   
-.title {
+.mainTitle {
     margin: 0 0 0.5em;
     text-transform: uppercase;
     font-weight: 900;
@@ -58,6 +58,27 @@ body {
     color: #ee6352;
     line-height: 0.8;
     margin: 0;
+    background-image: var(--gradient);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    background-size: 300%;
+    transition: background-position 1s;
+}
+
+.mainTitle:hover {
+  background-position: right;
+}
+
+.title {
+    margin-bottom: 2em;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 2rem;
+    color: #ee6352;
+    line-height: 0.8;
     background-image: var(--gradient);
     -webkit-background-clip: text;
             background-clip: text;
@@ -78,26 +99,36 @@ body {
     float: right;
 }
 
+.navbar ul {
+  display: inline-flex;
+}
+
+.navbar li {
+  list-style: none;
+  margin: 0 20px;
+  cursor: pointer;
+}
+
 .navbar a {
     display: block;
     text-decoration: none;
     font-size: 5px 20px;
     font-family: arial;
-    color: #000000bb;
+    color: #f45e61;
     padding: 0 20px;
     border-width: 3px;
     border-style: solid;
     border-image: 
     linear-gradient(
       to bottom, 
-      red, 
-      rgba(0, 0, 0, 0)
+      #fbca67
+      #f45e61
     ) 1 100%;
     transition: bottom-to-top 0.6s;
 }
 
-.navbar a.hover {
-    
+.navbar a:hover {
+  color: #fbca67;
 }
 
 .fun {
@@ -117,6 +148,38 @@ body {
 
 .container {
     margin-top: 40px;
+}
+
+.productList {
+  background: white;
+}
+
+.productList li {
+  list-style: none;
+  margin: 0 20px;
+  cursor: pointer;
+}
+
+.productList a {
+  display: block;
+  text-decoration: none;
+  font-size: 5px 20px;
+  font-family: arial;
+  color: #f45e61;
+  padding: 0 20px;
+  border-width: 3px;
+  border-style: solid;
+  border-image: 
+  linear-gradient(
+    to bottom, 
+    #fbca67
+    #f45e61
+  ) 1 100%;
+  transition: bottom-to-top 0.6s;
+}
+
+.productList a:hover {
+color: #fbca67;
 }
 
 /* 

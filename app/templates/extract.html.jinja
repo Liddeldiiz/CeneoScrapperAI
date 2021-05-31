@@ -10,9 +10,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endif %}
-    <form method="POST" action="{{ url_for('extract') }}" style="color: #E9F1F7;">
+    <form method="POST" action="{{ url_for('extract') }}" style="color: #f45e61;">
         {{ form.csrf_token }}
         {{ form.productID.label }} {{ form.productID(size=20) }}
-        {{ form.submit(class_="btn btn-info")}}
+        {{ form.submit(class_="fun")}}
     </form>
 {% endblock middle %}

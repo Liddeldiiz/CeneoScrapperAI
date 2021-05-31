@@ -2,9 +2,9 @@
 
 {% block middle %}
     <h2 class="title"> Brands </h2>
-    <ul class="list-group">
+    <ul class="productList">
         {% for product in productsList %}
-            <li class="list-group-item" style="background-color: #212529;"><a href="{{url_for('product', productID=product)}}" style="color: #E9F1F7; text-decoration: none;">{{ product }}</li>
+            <li><a href="{{url_for('product', productID=product)}}" >{{ product }}</a></li>
         {% endfor %}
     </ul>
 {% endblock middle %}
