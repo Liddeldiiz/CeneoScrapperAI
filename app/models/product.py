@@ -63,5 +63,5 @@ class Product:
         return {
             "productID": self.productID, 
             "name": self.productName,
-            "opinoins": [opinion.toDict() for opinion in self.opinions]
+            "opinions": [{opinion.toDict() for opinion in self.opinions}]
         }

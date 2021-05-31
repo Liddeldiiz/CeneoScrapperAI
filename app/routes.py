@@ -6,6 +6,9 @@ from flask import request, render_template, redirect, url_for
 from os import listdir
 import requests
 import json
+import pandas as pd
+import numpy as np
+
 
 app.config['SECRET_KEY'] = "NotSoSpecialSecretKey"
 
@@ -28,15 +31,27 @@ def extract():
             form.productID.errors.append("For given product ID there is no product")
     return render_template('extract.html.jinja', form=form)
 
-@app.route('/product/<productID>')
-def product(productID):
-    return render_template('product.html.jinja', productID=productID)
+@app.route('/product/<productBrand>/<productID>')
+def product(productBrand, productID):
+    file = pd.read_json("app/opinions/{}/{}.json".format(productBrand, productID), encoding="utf-8")
+    stars = None
+    for i in file["opinions"]:
+        stars += i["stars"]     # NOT QUIET SURE HOW TO COUNT THE DIFFERENT VALUES OF STARS
+    
+        #ax = stars.plot.bar(color="lightskyblue")
+        #ax.set_title("Frequency of stars in opinons")
+        #ax.set_xlabel("Stars values")
+        #ax.set_ylabel("Number of opinions")
+    #file_loaded = pd.read_json(file)
+    #file_loaded.to_csv(r'app/opinions/{}/{}.csv'.format(productBrand, productID), index = None)
+    #opinions = pd.read_csv(f"app/opinions/{productBrand}/{productID}.csv", sep=";", decimal=",", index_col=0)
+    return render_template('product.html.jinja', i=i, productBrand=productBrand, productID=productID)
 
-@app.route('/brands/<productID>')
-def brands(productID):
+@app.route('/brands/<productBrand>')
+def brands(productBrand):
     #return "you have reached the brand page"
-    productsList = [x.split(".")[0] for x in listdir("app/opinions/{}".format(productID))]
-    return render_template('brands.html.jinja', productsList=productsList)
+    productsList = [x.split(".")[0] for x in listdir("app/opinions/{}".format(productBrand))]
+    return render_template('brands.html.jinja', productsList=productsList, productBrand=productBrand)
 
 @app.route('/products')
 def products():

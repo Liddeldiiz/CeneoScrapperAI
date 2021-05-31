@@ -1,10 +1,10 @@
 {% extends "layout.html.jinja" %}
 
 {% block middle %}
-    <h2 class="title"> Brands </h2>
+    <h3 class="title"> {{ productBrand }}</h3>
     <ul class="productList">
-        {% for product in productsList %}
-            <li><a href="{{url_for('product', productID=product)}}" >{{ product }}</a></li>
+        {% for productID in productsList %}
+            <li><a href="{{url_for('product', productBrand=productBrand, productID=productID)}}" >{{ productID }}</a></li>
         {% endfor %}
     </ul>
 {% endblock middle %}
