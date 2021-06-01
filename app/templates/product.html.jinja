@@ -1,12 +1,41 @@
 {% extends "layout.html.jinja" %}
 
-{% block middle %}
+{% block left %}
     <h2> {{ productBrand }} </h2>
     <h2> {{  productID  }} </h2>
+{% endblock left %}
+
+{% block middle %}
     <!--<img src="app/static/Graphs/stars.png">-->
-    <div> 
-        {{ stars }}
-        
+    <div>
+        <div>
+            <h2> Stars </h2> 
+            {{ stars }}
+        </div>
+        <div>
+            <h2> Redomendations </h2> 
+            {{ redomendations }}
+        </div>
+        <div>
+            <h2> Average Score </h2> 
+            {{ averageScore }}
+        </div>
+        <div>
+            <h2> Pros Count </h2> 
+            {{ prosCount }}
+        </div>
+        <div>
+            <h2> Cons Count </h2> 
+            {{ consCount }}
+        </div>
+        <div>
+            <h2> Purchased </h2> 
+            {{ purchased }}
+        </div>
+        <div>
+            <h2> Features </h2> 
+            {{ features }}
+        </div>    
     </div>
 
 

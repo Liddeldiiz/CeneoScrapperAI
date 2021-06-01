@@ -72,10 +72,33 @@ def product(productBrand, productID):
         d = json.load(f)
     
     opinions = json_normalize(d['opinions'])
-    stars = opinions.groupby('stars').count()
     stars = opinions['stars']
+
+    redomendations = opinions['recomendation'].value_counts(dropna=False)
+    averageScore = opinions['stars'].mean()
+    prosCount = opinions['advantages'].count()
+    consCount = opinions['disadvantages'].count()
+    purchased = opinions['purchaseDate'].count()
+    advantages = []
+    for a in opinions['advantages'].dropna().tolist():
+        advantages += a.split(', ')
+    pros = pd.Series(advantages, name="advantages").value_counts()
+    disadvantages = []
+    for a in opinions['disadvantages'].dropna().tolist():
+        disadvantages += a.split(', ')
+    cons = pd.Series(disadvantages, name="disadvantages").value_counts()
+    features = pros.to_frame().join(cons)
     
-    return render_template('product.html.jinja', stars=stars, productBrand=productBrand, productID=productID)
+    return render_template('product.html.jinja', 
+    stars=stars, 
+    redomendations=redomendations, 
+    averageScore=averageScore,
+    prosCount=prosCount, 
+    consCount=consCount,
+    purchased=purchased,
+    features=features,
+    productBrand=productBrand, 
+    productID=productID)
 
 @app.route('/brands/<productBrand>')
 def brands(productBrand):
