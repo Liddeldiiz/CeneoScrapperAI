@@ -5,6 +5,9 @@ import requests
 import json
 from bs4 import BeautifulSoup
 import os
+from pandas import json_normalize
+import numpy as np
+from matplotlib import pyplot as plt
 
 class Product:
 
@@ -41,7 +44,7 @@ class Product:
         productModel = self.productName[directoryVar:]
         # EAFP - Easier to Ask for Forgivness than Permission
         try:
-            productModel = productModel.replace('/', '-')
+            productModel = productModel.replace('/', '-') # If the product name contains "/" such a symbol at can be interpreted by the progam as a directory backslash?
         except AttributeError:
             pass
 
@@ -49,11 +52,12 @@ class Product:
             with open("app/opinions/{}/{}.json".format(directory, productModel + "_" + self.productID), "w", encoding="UTF-8") as jf:
                 json.dump(self.toDict(), jf, indent=4, ensure_ascii=False)
         except OSError:
-            parent_dir = "D:\\Applied_informatics\\CeneoScrapperAI\\app\\opinions"
-            path = os.path.join(parent_dir, directory)
+            parent_dir_opinions = "D:\\Applied_informatics\\CeneoScrapperAI\\app\\opinions"
+            path = os.path.join(parent_dir_opinions, directory)
             os.mkdir(path)
             with open("app/opinions/{}/{}.json".format(directory, productModel + "_" + self.productID), "w", encoding="UTF-8") as jf:
                 json.dump(self.toDict(), jf, indent=4, ensure_ascii=False)
+
 
     def __str__(self):
         return '''productID: {}<br>
@@ -63,5 +67,5 @@ class Product:
         return {
             "productID": self.productID, 
             "name": self.productName,
-            "opinions": [{opinion.toDict() for opinion in self.opinions}]
+            "opinions": [opinion.toDict() for opinion in self.opinions]
         }

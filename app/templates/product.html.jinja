@@ -1,11 +1,13 @@
 {% extends "layout.html.jinja" %}
 
 {% block middle %}
-    <!--<h2> {{ productName }} </h2>
-    <h2> {{  productID  }} </h2>-->
-    {% for table in table %}
-        {{ table|safe }}
-    {% endfor %}
+    <h2> {{ productBrand }} </h2>
+    <h2> {{  productID  }} </h2>
+    <!--<img src="app/static/Graphs/stars.png">-->
+    <div> 
+        {{ stars }}
+        
+    </div>
 
 
 {% endblock middle %}
