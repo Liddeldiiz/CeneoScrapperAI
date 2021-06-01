@@ -3,7 +3,9 @@
 {% block middle %}
     <!--<h2> {{ productName }} </h2>
     <h2> {{  productID  }} </h2>-->
-    <p> {{ i }} </p>
+    {% for table in table %}
+        {{ table|safe }}
+    {% endfor %}
 
 
 {% endblock middle %}

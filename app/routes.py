@@ -33,19 +33,18 @@ def extract():
 
 @app.route('/product/<productBrand>/<productID>')
 def product(productBrand, productID):
-    file = pd.read_json("app/opinions/{}/{}.json".format(productBrand, productID), encoding="utf-8")
-    stars = None
-    for i in file["opinions"]:
-        stars += i["stars"]     # NOT QUIET SURE HOW TO COUNT THE DIFFERENT VALUES OF STARS
+    file_json_loaded = json_loads("app/opinions/{}/{}.json".format(productBrand, productID), encoding="utf-8")
+    file_json_loaded.to_csv(r'app/opinions/{}/{}.csv'.format(productBrand, productID), index = None)
+    opinions = pd.read_csv(f"app/opinions/{productBrand}/{productID}.csv", sep=";", decimal=",", index_col=0, error_bad_lines=False)
+    print(opinions[2])
+    
     
         #ax = stars.plot.bar(color="lightskyblue")
         #ax.set_title("Frequency of stars in opinons")
         #ax.set_xlabel("Stars values")
         #ax.set_ylabel("Number of opinions")
-    #file_loaded = pd.read_json(file)
-    #file_loaded.to_csv(r'app/opinions/{}/{}.csv'.format(productBrand, productID), index = None)
-    #opinions = pd.read_csv(f"app/opinions/{productBrand}/{productID}.csv", sep=";", decimal=",", index_col=0)
-    return render_template('product.html.jinja', i=i, productBrand=productBrand, productID=productID)
+    
+    return render_template('product.html.jinja', table=[opinions.to_html(classes='data', index = False)], titles= opinions.columns.values, productBrand=productBrand, productID=productID)
 
 @app.route('/brands/<productBrand>')
 def brands(productBrand):
