@@ -78,6 +78,39 @@ class Product:
                 opinions = product["opinions"]
                 for opinion in opinions:
                     self.opinions.append(Opinion(**opinion))
+
+        return self
+
+    def createGraphs(self):
+        for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
+            path = file
+        self.productName = path.split("\\")[2].split(".")[0]
+        self.directory = path.split("\\")[1]
+
+        with open("app/opinions/{}/{}.json".format(self.directory, self.productName), "r", encoding="UTF-8") as jf:
+                product = json.load(jf)
+                self.name = product['name']
+                opinions = json_normalize(product["opinions"])
+                
+                
+                if os.path.isdir('app/static/Graphs/{}/{}'.format(self.directory, self.productName)) == True:
+                    stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
+                    ax = stars.plot.bar(color="lightskyblue")
+                    ax.set_title("Frequency of stars in opinons")
+                    ax.set_xlabel("Stars values")
+                    ax.set_ylabel("Number of opinions")
+                    plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.productName))
+                else:
+                    parent_dir_graphs = "D:\\Applied_informatics\\CeneoScrapperAI\\app\\static\\Graphs"
+                    path = os.path.join(parent_dir_graphs, self.directory, self.productName)
+                    os.makedirs(path)
+                    
+                    stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
+                    ax = stars.plot.bar(color="lightskyblue")
+                    ax.set_title("Frequency of stars in opinons")
+                    ax.set_xlabel("Stars values")
+                    ax.set_ylabel("Number of opinions")
+                    plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.productName))
         return self
 
 

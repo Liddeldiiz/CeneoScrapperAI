@@ -42,9 +42,16 @@ body {
     }
 }
 
+.content-navbar {
+  background-color: white;
+  width: 80vw;
+  padding: 3em;
+  box-shadow: 0 0 3em rgba(0, 0, 0, 0.15);
+}
+
 .content {
     background-color: white;
-    width: 70vw;
+    width: 80vw;
     padding: 3em;
     box-shadow: 0 0 3em rgba(0, 0, 0, 0.15);
 }
@@ -180,6 +187,14 @@ body {
 
 .productList a:hover {
 color: #fbca67;
+}
+
+.table {
+  width: 100%;
+}
+
+.table.dataTable {
+  margin: -6.35em;
 }
 
 /* 

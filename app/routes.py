@@ -12,6 +12,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 import os
 
+# common bug is: RuntimeError: main thread is not in main loop
+
 
 app.config['SECRET_KEY'] = "NotSoSpecialSecretKey"
 
@@ -38,39 +40,12 @@ def extract():
 def extractedProduct(productID):
     product = Product(productID)
     opinions = product.importProduct().opinionsToDataFrame()
+    product.createGraphs()
 
-    return render_template('extractedProduct.html.jinja', tables=[opinions.to_html(classes='data')]) #table_id="opinions"
+    return render_template('extractedProduct.html.jinja', tables=[opinions.to_html(classes='table table-striped table-sm table-responsive display', table_id="opinions")])
 
 @app.route('/product/<productBrand>/<productID>')
 def product(productBrand, productID):
-    """try:
-        with open("app/opinions/{}/{}.json".format(productBrand, productID), encoding="cp437", errors="ignore") as f:
-            d = json.load(f)
-    
-        opinions = json_normalize(d['opinions'])
-        stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
-        ax = stars.plot.bar(color="lightskyblue")
-        ax.set_title("Frequency of stars in opinons")
-        ax.set_xlabel("Stars values")            
-        ax.set_ylabel("Number of opinions")
-        plt.savefig('app/ststic/Graphs/{}/{}/stars.png'.format(productBrand, productID))
-    except OSError:
-        parent_dir_graphs = "D:\\Applied_informatics\\CeneoScrapperAI\\app\\static\\Graphs"
-        path = os.path.join(parent_dir_graphs, productBrand)
-        os.mkdir(path)
-        with open("app/opinions/{}/{}.json".format(productBrand, productID), encoding="cp437", errors="ignore") as f:
-            d = json.load(f)
-        opinions = json_normalize(d['opinions'])
-        stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
-        ax = stars.plot.bar(color="lightskyblue")
-        ax.set_title("Frequency of stars in opinons")
-        ax.set_xlabel("Stars values")
-        ax.set_ylabel("Number of opinions")
-        plt.savefig('app/ststic/Graphs/{}/{}/stars.png'.format(productBrand, productID))
-    #ax.set_title("Frequency of stars in opinons")
-    #ax.set_xlabel("Stars values")
-    #ax.set_ylabel("Number of opinions")
-    """
     with open("app/opinions/{}/{}.json".format(productBrand, productID), encoding="cp437", errors="ignore") as f:
         d = json.load(f)
     

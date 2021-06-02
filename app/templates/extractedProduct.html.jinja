@@ -1,7 +1,21 @@
 {% extends "layout.html.jinja" %}
 
 {% block middle %}
-    <h2> {{  productID  }} </h2>
+    {% for table in tables %}
+        {{ table|safe }}
+    {% endfor %}
 
-
+    <img src="D:\\Applied_informatics\\CeneoScrapperAI\\app\\static\\Graphs\\POCO\\X3 Pro 8-256GB Czarny_105040551\\stars.png" alt="starsGraph">
 {% endblock middle %}
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+            $('#opinions').DataTable( {
+                "scrollY":        "600px",
+                "scrollCollapse": true,
+                "scrollX":        "600px",
+                "paging":         true
+            } );
+        } );
+    </script>
+{% endblock scripts %}
