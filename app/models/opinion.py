@@ -56,6 +56,6 @@ class Opinion:
         return 'opinionID: '+str(self.opinionID)+'<br>'+'<br>'.join(key+": "+str(getattr(self, key)) for key in self.selectors.keys())
 
     def toDict(self):
-        return {'opinoinID': self.opinionID} | {key: getattr(self, key) for key in self.selectors.keys()}
+        return {'opinionID': self.opinionID} | {key: getattr(self, key) for key in self.selectors.keys()}
         
 

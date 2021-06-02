@@ -36,7 +36,10 @@ def extract():
 
 @app.route('/extractedProduct/<productID>')
 def extractedProduct(productID):
-    return render_template('extractedProduct.html.jinja', productID=productID)
+    product = Product(productID)
+    opinions = product.importProduct().opinionsToDataFrame()
+
+    return render_template('extractedProduct.html.jinja', tables=[opinions.to_html(classes='data')]) #table_id="opinions"
 
 @app.route('/product/<productBrand>/<productID>')
 def product(productBrand, productID):
@@ -74,20 +77,20 @@ def product(productBrand, productID):
     opinions = json_normalize(d['opinions'])
     stars = opinions['stars'].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
 
-    #redomendations = opinions['recomendation'].value_counts(dropna=False)
-    #averageScore = opinions['stars'].mean()
-    #prosCount = opinions['advantages'].count()
-    #consCount = opinions['disadvantages'].count()
-    #purchased = opinions['purchaseDate'].count()
-    #advantages = []
-    #for a in opinions['advantages'].dropna().tolist():
-    #    advantages += a.split(', ')
-    #pros = pd.Series(advantages, name="advantages").value_counts()
-    #disadvantages = []
-    #for a in opinions['disadvantages'].dropna().tolist():
-    #    disadvantages += a.split(', ')
-    #cons = pd.Series(disadvantages, name="disadvantages").value_counts()
-    #features = pros.to_frame().join(cons)
+    redomendations = opinions['recomendation'].value_counts(dropna=False)
+    averageScore = opinions['stars'].mean()
+    prosCount = opinions['advantages'].count()
+    consCount = opinions['disadvantages'].count()
+    purchased = opinions['purchaseDate'].count()
+    advantages = []
+    for a in opinions['advantages'].dropna().tolist():
+        advantages += a.split(', ')
+    pros = pd.Series(advantages, name="advantages").value_counts()
+    disadvantages = []
+    for a in opinions['disadvantages'].dropna().tolist():
+        disadvantages += a.split(', ')
+    cons = pd.Series(disadvantages, name="disadvantages").value_counts()
+    features = pros.to_frame().join(cons)
 
     """data = [
         
@@ -107,19 +110,19 @@ def product(productBrand, productID):
     values = [row[1] for row in data]"""
 
     
-    labels = [row[0] for row in stars]
-    values = [row[1] for row in stars]
+    #labels = [row[0] for row in stars]
+    #values = [row[1] for row in stars]
     
     return render_template('product.html.jinja', 
-    #stars=stars, 
-    #redomendations=redomendations, 
-    #averageScore=averageScore,
-    #prosCount=prosCount, 
-    #consCount=consCount,
-    #purchased=purchased,
-    #features=features,
-    labels=labels,
-    values=values,
+    stars=stars, 
+    redomendations=redomendations, 
+    averageScore=averageScore,
+    prosCount=prosCount, 
+    consCount=consCount,
+    purchased=purchased,
+    features=features,
+    #labels=labels,
+    #values=values,
     productBrand=productBrand, 
     productID=productID)
 
@@ -136,7 +139,6 @@ def products():
 
 @app.route('/author')
 def author():
-    return "Applied informatics 2020/2021"
+    return render_template('author.html.jinja')
 
-# task: when we click on the products button, you will have the page and there will be all the products that we have extracted
-#list group bootstrap
+# task: prepare about author page
