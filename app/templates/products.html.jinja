@@ -1,12 +1,12 @@
 {% extends "layout.html.jinja" %}
 
 {% block middle %}
-    <h2 class="title"> Products </h2>
     
-    <ul class="productList">
-        {% for productBrand in brandList %}
-            <li><a href="{{url_for('brands', productBrand=productBrand)}}">{{ productBrand }}</a></li>
-        {% endfor %}
-    </ul>
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ form.brand }}
+        {{ form.product }}
+        <input type="submit">
+    </form>
 
 {% endblock middle %}

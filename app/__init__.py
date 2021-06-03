@@ -1,5 +1,6 @@
 # from flask package import Flask class
 from flask import Flask
+
 # in this line we are defining Flask object
 app = Flask(__name__)
 

@@ -99,9 +99,9 @@ class Product:
                     ax.set_title("Frequency of stars in opinons")
                     ax.set_xlabel("Stars values")
                     ax.set_ylabel("Number of opinions")
-                    plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.productName))
+                    #plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.productName))
                 else:
-                    parent_dir_graphs = "D:\\Applied_informatics\\CeneoScrapperAI\\app\\static\\Graphs"
+                    parent_dir_graphs = "app/static/Graphs"
                     path = os.path.join(parent_dir_graphs, self.directory, self.productName)
                     os.makedirs(path)
                     
@@ -110,7 +110,7 @@ class Product:
                     ax.set_title("Frequency of stars in opinons")
                     ax.set_xlabel("Stars values")
                     ax.set_ylabel("Number of opinions")
-                    plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.productName))
+                    #plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.productName))
         return self
 
 

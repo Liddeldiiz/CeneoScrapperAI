@@ -2,7 +2,8 @@ from app import app
 from app.models.opinion import Opinion
 from app.models.product import Product
 from app.forms import ProductForm
-from flask import request, render_template, redirect, url_for
+from app.forms import Form
+from flask import request, render_template, redirect, url_for, jsonify
 from os import listdir
 import requests
 import json
@@ -13,9 +14,11 @@ from matplotlib import pyplot as plt
 import os
 
 # common bug is: RuntimeError: main thread is not in main loop
-
+# UserWarning: Starting a Matplotlib GUI outside of the main thread will likely fail.
+# fig = self.plt.figure(figsize=self.figsize)
 
 app.config['SECRET_KEY'] = "NotSoSpecialSecretKey"
+
 
 @app.route('/')
 @app.route('/index')
@@ -110,6 +113,7 @@ def brands(productBrand):
 @app.route('/products')
 def products():
     brandList = [x.split(".")[0] for x in listdir("app/opinions")]
+
     return render_template('products.html.jinja', brandList=brandList)
 
 @app.route('/author')
