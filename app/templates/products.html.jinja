@@ -4,9 +4,16 @@
     
     <form method="POST">
         {{ form.csrf_token }}
-        {{ form.brand }}
-        {{ form.product }}
-        <input type="submit">
+        <div>
+            <label for="email">Brand</label>
+            {{ form.brand(class="form-control") }}
+        </div>
+        <div>
+            <label for="email">Product</label>
+            {{ form.products(class="form-control") }}
+        </div>
+        
+        <input type="submit" class="btn btn-success" btn-lg>
     </form>
 
 {% endblock middle %}

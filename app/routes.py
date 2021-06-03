@@ -13,12 +13,29 @@ import numpy as np
 from matplotlib import pyplot as plt
 import os
 
+from flask_sqlalchemy import SQLAlchemy
+
 # common bug is: RuntimeError: main thread is not in main loop
 # UserWarning: Starting a Matplotlib GUI outside of the main thread will likely fail.
 # fig = self.plt.figure(figsize=self.figsize)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 app.config['SECRET_KEY'] = "NotSoSpecialSecretKey"
 
+db = SQLAlchemy(app)
+
+class Brand(db.Model):
+    __tablename__ = 'brands'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+
+class Products(db.Model):
+    __tablename__ = 'products'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+    brand_id = db.Column(db.Integer)
 
 @app.route('/')
 @app.route('/index')
@@ -110,11 +127,12 @@ def brands(productBrand):
     productsList = [x.split(".")[0] for x in listdir("app/opinions/{}".format(productBrand))]
     return render_template('brands.html.jinja', productsList=productsList, productBrand=productBrand)
 
-@app.route('/products')
+@app.route('/products', methods=['GET', 'POST'])
 def products():
+    form = Form()
     brandList = [x.split(".")[0] for x in listdir("app/opinions")]
 
-    return render_template('products.html.jinja', brandList=brandList)
+    return render_template('products.html.jinja', form=form, brandList=brandList)
 
 @app.route('/author')
 def author():

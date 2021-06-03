@@ -24,6 +24,15 @@ class Form(FlaskForm):
         productsListPrint += (brandList[n], [x.split(".")[0] for x in listdir("app/opinions/{}".format(product))])
         n+=1
 
-    brand = SelectField('brand', choices=[(product, product[product+1]) for product in productsListPrint if type(product)!=list])
-    product = SelectField('product', choices=[])
+    brandsList = []
+    productList = []
+    for product in productsListPrint:
+        if type(product)!=list:
+            brandsList.append(product)
+        if type(product)==list:
+            productList.append(product)
+
+    brand = SelectField('brand', choices=[])
+    products = SelectField('product', choices=[])
     
+    #(brandsList[0], productList[0]), (brandsList[1], productList[1]), (brandsList[2], productList[2]), (brandsList[3], productList[3]), (brandsList[4], productList[4])
