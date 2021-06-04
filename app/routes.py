@@ -13,7 +13,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import os
 
-from flask_sqlalchemy import SQLAlchemy
+#from flask_sqlalchemy import SQLAlchemy
 
 # common bug is: RuntimeError: main thread is not in main loop
 # UserWarning: Starting a Matplotlib GUI outside of the main thread will likely fail.
@@ -22,9 +22,11 @@ from flask_sqlalchemy import SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 app.config['SECRET_KEY'] = "NotSoSpecialSecretKey"
 
-db = SQLAlchemy(app)
+# db = dataBase
 
-class Brand(db.Model):
+# db = SQLAlchemy(app)
+
+"""class Brand(db.Model):
     __tablename__ = 'brands'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -35,7 +37,7 @@ class Products(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
-    brand_id = db.Column(db.Integer)
+    brand_id = db.Column(db.Integer)"""
 
 @app.route('/')
 @app.route('/index')

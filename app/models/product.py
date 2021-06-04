@@ -10,7 +10,7 @@ import os
 import numpy as np
 import glob
 
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 
 class Product:
 
