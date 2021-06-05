@@ -69,27 +69,7 @@ class Product:
                 json.dump(self.toDict(), jf, indent=4, ensure_ascii=False)
         return self
 
-    def exportProductDB(self):
-        # EAFP - Easier to Ask for Forgivness than Permission
-        self.directory = self.productName.split()[0]
-        directoryVar = len(self.directory)+1
-        self.productModel = self.productName[directoryVar:]
-        try:
-            self.productModel = self.productModel.replace('/', '-') # If the product name contains "/" such a symbol at can be interpreted by the progam as a directory backslash?
-        except AttributeError:
-            pass
-
-        try:
-            with open("app/opinions/{}/{}.json".format(self.directory, self.productModel + "_" + self.productID), "w", encoding="UTF-8") as jf:
-                json.dump(self.toDictDB(), jf, indent=4, ensure_ascii=False)
-        except OSError:
-            parent_dir_opinions = "D:\\Applied_informatics\\CeneoScrapperAI\\app\\opinions"
-            path = os.path.join(parent_dir_opinions, self.directory)
-            os.mkdir(path)
-            with open("app/opinions/{}/{}.json".format(self.directory, self.productModel + "_" + self.productID), "w", encoding="UTF-8") as jf:
-                json.dump(self.toDictDB(), jf, indent=4, ensure_ascii=False)
-        print("checkpoint: exportProductDB function")
-        return self
+    
     """def importProduct(self):
         for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
             path = file
@@ -113,11 +93,11 @@ class Product:
 
         
         product = Query()
-        print("DB has", len(db) ,"objects")
-        print(self.productID)
-        tempResult = db.search(product.productID == "85615932")
+        print("Data Base has", len(db) ,"objects")
+        print("This is the productID in the importProductFromDB function:", self.productID)
+        #tempResult = db.search(product.productID == "94882813")
         result = db.search(product.productID == self.productID)
-        print(tempResult)
+        #print(tempResult)
         self.productName = result[0]['name']
         opinions = result[0]['opinions']
         for opinion in opinions:
@@ -165,24 +145,12 @@ class Product:
         name: {}<br>'''.format(self.productID, self.productName)+"<br>".join(str(opinion) for opinion in self.opinions)
 
     def toDict(self):
-        return {
-                "productID": self.productID, 
-                "name": self.productName,
-                "opinions": [opinion.toDict() for opinion in self.opinions]
-            }
-
-    def toDictDB(self):
-        product = Query()
-        print(self.productID)
-        if db.search(product.productID == self.productID) == False:
-            print("DataBase is being updated")
-            return db.insert({
+        return db.insert({
                 "productID": self.productID, 
                 "name": self.productName,
                 "opinions": [opinion.toDict() for opinion in self.opinions]
             })
-        else:
-            print("This product has already been extracted!\nUpdate feature not introduced yet")
+
 
     def opinionsToDataFrame(self):
         opinions = pd.json_normalize([opinion.toDict() for opinion in self.opinions]) # <-- list comprehension

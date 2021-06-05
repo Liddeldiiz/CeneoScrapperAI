@@ -4,9 +4,12 @@ from flask_wtf import FlaskForm
 from wtforms.fields.core import SelectField
 
 from os import listdir
+import json
 from tinydb import TinyDB, Query
 
 from app.models.product import db
+
+from pandas import json_normalize
 
 class ProductForm(FlaskForm):
     productID = StringField(
@@ -19,28 +22,19 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Extract')
 
 class Form(FlaskForm):
-    """product = Query()
-    print(len(db))
-    result = db.search(product.productID == self.productID)
-    print(result)
-    self.productName = result[0]['name']"""
+    with open("db.json", "r", encoding="UTF-8") as jf:
+        product = json.load(jf)
+        brandList = []
+        n = 1
+        while n <= len(product["_default"]):
+            name = product["_default"][str(n)]['name']
+            brandList.append(name)
+            n+=1
+        print(brandList)
+        #opinions = json_normalize(product["opinions"])
     
-    brandList = [x.split(".")[0] for x in listdir("app/opinions")]
-    productsListPrint = []
-    n=0
-    for product in brandList:
-        productsListPrint += (brandList[n], [x.split(".")[0] for x in listdir("app/opinions/{}".format(product))])
-        n+=1
 
-    brandsList = []
-    productList = []
-    for product in productsListPrint:
-        if type(product)!=list:
-            brandsList.append(product)
-        if type(product)==list:
-            productList.append(product)
-
-    brand = SelectField('brand', choices=[])
+    brand = SelectField('brand', choices=[brandList]) # ==> ((brand, (productList from brand)), brand#2, (productList from brand#2))
     products = SelectField('product', choices=[])
     
     #(brandsList[0], productList[0]), (brandsList[1], productList[1]), (brandsList[2], productList[2]), (brandsList[3], productList[3]), (brandsList[4], productList[4])

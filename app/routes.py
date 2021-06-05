@@ -49,14 +49,10 @@ def extract():
     form = ProductForm()
     if request.method == 'POST' and form.validate_on_submit():
         product = Product(request.form['productID'])
-        productDB = Product(request.form['productID'])
         respons = requests.get(product.opinionsPageURL())
-        responsDB = requests.get(productDB.opinionsPageURL())
-        if respons.status_code == 200 and responsDB.status_code == 200:
+        if respons.status_code == 200:
             product.extractProduct()
-            productDB.extractProduct()
             product.exportProduct()
-            productDB.exportProductDB()
             return redirect(url_for('extractedProduct', productID=product.productID))
         else:
             form.productID.errors.append("For given product ID there is no product")
