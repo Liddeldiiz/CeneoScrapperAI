@@ -10,6 +10,9 @@ import os
 import numpy as np
 import glob
 
+from tinydb import TinyDB, Query
+db = TinyDB('app/opinions/db.json')
+
 #from matplotlib import pyplot as plt
 
 class Product:
@@ -71,15 +74,26 @@ class Product:
             path = file
         self.productName = path.split("\\")[2].split(".")[0]
         self.directory = path.split("\\")[1]
-        
+
         with open("app/opinions/{}/{}.json".format(self.directory, self.productName), "r", encoding="UTF-8") as jf:
-                product = json.load(jf)
-                self.name = product['name']
-                opinions = product["opinions"]
-                for opinion in opinions:
-                    self.opinions.append(Opinion(**opinion))
+            product = json.load(jf)
+            self.productName = product['name']
+            opinions = product["opinions"]
+            for opinion in opinions:
+                self.opinions.append(Opinion(**opinion))
 
         return self
+
+    def importProductFromDB(self):
+        for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
+            path = file
+        self.productName = path.split("\\")[2].split(".")[0]
+        self.directory = path.split("\\")[1]
+
+        print(db[1])
+        
+        
+        
 
     def createGraphs(self):
         for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
@@ -91,7 +105,6 @@ class Product:
                 product = json.load(jf)
                 self.name = product['name']
                 opinions = json_normalize(product["opinions"])
-                
                 
                 if os.path.isdir('app/static/Graphs/{}/{}'.format(self.directory, self.productName)) == True:
                     stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)

@@ -63,6 +63,7 @@ def extractedProduct(productID):
     product = Product(productID)
     opinions = product.importProduct().opinionsToDataFrame()
     product.createGraphs()
+    product.importProductFromDB()
 
     return render_template('extractedProduct.html.jinja', tables=[opinions.to_html(classes='table table-striped table-sm table-responsive display', table_id="opinions")])
 
