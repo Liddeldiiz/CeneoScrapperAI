@@ -49,10 +49,14 @@ def extract():
     form = ProductForm()
     if request.method == 'POST' and form.validate_on_submit():
         product = Product(request.form['productID'])
+        productDB = Product(request.form['productID'])
         respons = requests.get(product.opinionsPageURL())
-        if respons.status_code == 200:
+        responsDB = requests.get(productDB.opinionsPageURL())
+        if respons.status_code == 200 and responsDB.status_code == 200:
             product.extractProduct()
+            productDB.extractProduct()
             product.exportProduct()
+            productDB.exportProductDB()
             return redirect(url_for('extractedProduct', productID=product.productID))
         else:
             form.productID.errors.append("For given product ID there is no product")
@@ -61,10 +65,10 @@ def extract():
 @app.route('/extractedProduct/<productID>')
 def extractedProduct(productID):
     product = Product(productID)
-    opinions = product.importProduct().opinionsToDataFrame()
-    product.createGraphs()
-    product.importProductFromDB()
-
+    #opinions = product.importProduct().opinionsToDataFrame()
+    #product.createGraphs()
+    opinions = product.importProductFromDB().opinionsToDataFrame()
+    #tables=[opinions.to_html(classes='table table-striped table-sm table-responsive display', table_id="opinions")]
     return render_template('extractedProduct.html.jinja', tables=[opinions.to_html(classes='table table-striped table-sm table-responsive display', table_id="opinions")])
 
 @app.route('/product/<productBrand>/<productID>')

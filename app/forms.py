@@ -4,7 +4,9 @@ from flask_wtf import FlaskForm
 from wtforms.fields.core import SelectField
 
 from os import listdir
+from tinydb import TinyDB, Query
 
+from app.models.product import db
 
 class ProductForm(FlaskForm):
     productID = StringField(
@@ -17,6 +19,12 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Extract')
 
 class Form(FlaskForm):
+    """product = Query()
+    print(len(db))
+    result = db.search(product.productID == self.productID)
+    print(result)
+    self.productName = result[0]['name']"""
+    
     brandList = [x.split(".")[0] for x in listdir("app/opinions")]
     productsListPrint = []
     n=0
