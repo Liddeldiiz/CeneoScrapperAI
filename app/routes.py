@@ -13,6 +13,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 import os
 
+from app.models.selection import choicesList
+
 #from flask_sqlalchemy import SQLAlchemy
 
 # common bug is: RuntimeError: main thread is not in main loop
@@ -117,6 +119,7 @@ def brands(productBrand):
 @app.route('/products', methods=['GET', 'POST'])
 def products():
     form = SelectForm()
+    form.products.choices = [choicesList[1], choicesList[3]]
     #brandList = [x.split(".")[0] for x in listdir("app/opinions")]
     
 

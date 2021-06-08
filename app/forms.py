@@ -6,7 +6,7 @@ from wtforms.fields.core import SelectField
 from os import listdir
 import json
 
-from app.models.selection import selectArguments # ==> ModuleNotFoundError: No module named 'app.models.selection'
+from app.models.selection import choicesList # ==> ModuleNotFoundError: No module named 'app.models.selection'
 
 from pandas import json_normalize
 
@@ -22,8 +22,8 @@ class ProductForm(FlaskForm):
 
 class SelectForm(FlaskForm):
 
-    
-    brand = SelectField('brand', choices=[selectArguments()]) # ==> ((brand, (productList from brand)), brand#2, (productList from brand#2))
+    n=0
+    brand = SelectField('brand', choices=[(choicesList[0], choicesList[1]), (choicesList[2], choicesList[3])]) # ==> ((brand, (productList from brand)), brand#2, (productList from brand#2))
     products = SelectField('product', choices=[])
 
     
