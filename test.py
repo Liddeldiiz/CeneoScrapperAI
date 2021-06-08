@@ -1,7 +1,13 @@
-url = "https://www.ceneo.pl/96961305#tab=reviews"
-
-x = url.split("https://www.ceneo.pl/")
-x1 = x[1].split("#tab=reviews")
-print(x1)
-
-# prepare routings according to scenarios
+brandList = ['Fiio', 'Samsung', 'POCO', 'Samsung']
+modelList = ['M15', 'Galaxy', 'X3', 'Galaxy']
+choicesList = []
+n = 0
+for brand in brandList:
+    if brand != choicesList[0]:
+        choicesList.append(brand)
+        choicesList.append(modelList[n])
+        n+=1
+    else:
+        choicesList.append(modelList[n])
+        n+=1
+print(choicesList)

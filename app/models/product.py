@@ -90,15 +90,21 @@ class Product:
             path = file
         self.productName = path.split("\\")[2].split(".")[0]
         self.directory = path.split("\\")[1]
+        brand = self.productName.split()[0]
+        print("The brand is:", brand)
+        brandModel = self.productName.split()[1]
+        print("The model is:", brandModel)
+        self.productModel = brandModel
+        self.productName = brand
 
         
-        product = Query()
-        print("Data Base has", len(db) ,"objects")
-        print("This is the productID in the importProductFromDB function:", self.productID)
+        tempProduct = Query()
+        #print("Data Base has", len(db) ,"objects")
+        #print("This is the productID in the importProductFromDB function:", self.productID)
         #tempResult = db.search(product.productID == "94882813")
-        result = db.search(product.productID == self.productID)
-        #print(tempResult)
-        self.productName = result[0]['name']
+        result = db.search(tempProduct.productID == self.productID)
+        #print(result)
+        self.productName = result[0]['Brand']
         opinions = result[0]['opinions']
         for opinion in opinions:
             self.opinions.append(Opinion(**opinion))
@@ -145,11 +151,20 @@ class Product:
         name: {}<br>'''.format(self.productID, self.productName)+"<br>".join(str(opinion) for opinion in self.opinions)
 
     def toDict(self):
-        return db.insert({
-                "productID": self.productID, 
-                "name": self.productName,
-                "opinions": [opinion.toDict() for opinion in self.opinions]
-            })
+        tempProduct = Query()
+        brand = self.productName.split()[0]
+        brandModel = self.productName.split()[1]
+        if db.search(tempProduct.productID == self.productID) == []:
+            print("updating DataBase")
+            print(self.productName, self.productModel)
+            return db.insert({
+                    "productID": self.productID, 
+                    "Brand": brand,
+                    "model": brandModel,
+                    "opinions": [opinion.toDict() for opinion in self.opinions]
+                })
+        else:
+            print("update feature not introduced yet")
 
 
     def opinionsToDataFrame(self):

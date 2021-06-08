@@ -134,6 +134,7 @@ def brands(productBrand):
 def products():
     form = Form()
     brandList = [x.split(".")[0] for x in listdir("app/opinions")]
+    
 
     return render_template('products.html.jinja', form=form, brandList=brandList)
 

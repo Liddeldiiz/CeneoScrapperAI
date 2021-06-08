@@ -22,19 +22,38 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Extract')
 
 class Form(FlaskForm):
+    choicesList = []
+    models = []
     with open("db.json", "r", encoding="UTF-8") as jf:
         product = json.load(jf)
-        brandList = []
+        descriptiveList = []
         n = 1
         while n <= len(product["_default"]):
-            name = product["_default"][str(n)]['name']
-            brandList.append(name)
+            name = product["_default"][str(n)]['Brand']
+            descriptiveList.append(name)
             n+=1
-        print(brandList)
+    descriptiveList_set = set(descriptiveList)
+    productDB = Query()
+    #for item in descriptiveList_set:
+    #   result = db.search(productDB.Brand == "model")
+    #    choicesList.append(item, (result))
+    for item in descriptiveList_set:
+        result = db.search(productDB.Brand == item)
+        n = 0
+        models.clear()# I need to find a way to clear the models list before it appends the previous models to another brand...
+        while n < (len(result)):
+        #print(result[0]["model"])
+            models.append(result[0]["model"])
+            n+=1
+        choicesList.append(item)
+        choicesList.append(models)
+    print(choicesList)
+
         #opinions = json_normalize(product["opinions"])
     
-
-    brand = SelectField('brand', choices=[brandList]) # ==> ((brand, (productList from brand)), brand#2, (productList from brand#2))
+    
+    brand = SelectField('brand', choices=[]) # ==> ((brand, (productList from brand)), brand#2, (productList from brand#2))
     products = SelectField('product', choices=[])
+
     
     #(brandsList[0], productList[0]), (brandsList[1], productList[1]), (brandsList[2], productList[2]), (brandsList[3], productList[3]), (brandsList[4], productList[4])
