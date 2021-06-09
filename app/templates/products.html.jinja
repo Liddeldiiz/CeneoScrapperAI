@@ -1,12 +1,12 @@
 {% extends "layout.html.jinja" %}
 
 {% block middle %}
-    
+
     <form method="POST">
         {{ form.csrf_token }}
         <div>
             <label for="email">Brand</label>
-            {{ form.brand(class="form-control") }}
+            {{ form.brand(class="form-control", onchange = "myFunction()") }}
         </div>
         <div>
             <label for="email">Product</label>
@@ -17,3 +17,5 @@
     </form>
 
 {% endblock middle %}
+{% block scripts %}
+{% endblock scripts %}

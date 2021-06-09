@@ -119,11 +119,14 @@ def brands(productBrand):
 @app.route('/products', methods=['GET', 'POST'])
 def products():
     form = SelectForm()
-    form.products.choices = [choicesList[1], choicesList[3]]
-    #brandList = [x.split(".")[0] for x in listdir("app/opinions")]
     
+    #brandList = [x.split(".")[0] for x in listdir("app/opinions")]
+    for x in range(0, len(choicesList)):
+        if x%2 != 0:
+            choicesList[x] = list(choicesList[x])
+    print(choicesList)
 
-    return render_template('products.html.jinja', form=form)
+    return render_template('products.html.jinja', form=form, choicesList=choicesList)
 
 @app.route('/author')
 def author():

@@ -30,4 +30,4 @@ for item in descriptiveList_set:
     choicesList.append(item)
     choicesList.append(models_set)
 n=0
-print(choicesList[n+1])
+#print(choicesList)

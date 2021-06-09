@@ -21,10 +21,17 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Extract')
 
 class SelectForm(FlaskForm):
+    choices2 = []
+    choices3 = []
+    for x in range(0, len(choicesList)):
+        if x%2 == 0:
+            choices2.append((x, choicesList[x]))
+        else:
+            choices3.append((x, choicesList[x]))
 
-    n=0
-    brand = SelectField('brand', choices=[(choicesList[0], choicesList[1]), (choicesList[2], choicesList[3])]) # ==> ((brand, (productList from brand)), brand#2, (productList from brand#2))
-    products = SelectField('product', choices=[])
+    brand = SelectField('brand', choices=choices2, validate_choice=False) # ==> ((brand, (productList from brand)), brand#2, (productList from brand#2))
+    products = SelectField('product', choices=choices3, validate_choice=False)
+    
 
     
     #(brandsList[0], productList[0]), (brandsList[1], productList[1]), (brandsList[2], productList[2]), (brandsList[3], productList[3]), (brandsList[4], productList[4])
