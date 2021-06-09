@@ -2,7 +2,7 @@
 
 {% block left %}
     <h2> {{ productBrand }} </h2>
-    <h2> {{  productID  }} </h2>
+    <h2> {{  product  }} </h2>
 {% endblock left %}
 
 {% block middle %}
@@ -71,11 +71,6 @@
 
 {% endblock middle %}
 {% block scripts %}
-    <script>
-        $(document).ready( function () {
-            $('opinions').DataTable();
-        } );
-    </script>
 
 
 {% endblock scripts %}

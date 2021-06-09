@@ -32,6 +32,7 @@ class SelectForm(FlaskForm):
     brand = SelectField('brand', choices=choices2, validate_choice=False) # ==> ((brand, (productList from brand)), brand#2, (productList from brand#2))
     products = SelectField('product', choices=choices3, validate_choice=False)
     
+    submit = SubmitField('Search')
 
     
     #(brandsList[0], productList[0]), (brandsList[1], productList[1]), (brandsList[2], productList[2]), (brandsList[3], productList[3]), (brandsList[4], productList[4])

@@ -49,16 +49,13 @@
   <script>    
     function myFunction() {
     var x = document.getElementById("brand").value;
-    alert(x)
     var y = {{ choicesList }};
-    console.log(y)
-    console.log(parseInt(x))
     var stringNum = (parseInt(x)+1).toString();
     var i;
     document.getElementById("products").innerHTML = "";
-    
-    for (i = 0; i < choicesList[stringNum]; i++) {
-      document.getElementById("products").innerHTML += "<option value=" + stringNum + ">"+choicesList[i]+;
+    for (i = 0; i < y[stringNum].length; i++) {
+      console.log(y[stringNum][i])
+      document.getElementById("products").innerHTML += "<option value=" + stringNum + ">" + y[stringNum][i] + "</option>";
       }
     }
   </script>

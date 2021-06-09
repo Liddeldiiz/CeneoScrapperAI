@@ -2,7 +2,7 @@
 
 {% block middle %}
 
-    <form method="POST">
+    <form method="POST" action="{{ url_for('products') }}">
         {{ form.csrf_token }}
         <div>
             <label for="email">Brand</label>

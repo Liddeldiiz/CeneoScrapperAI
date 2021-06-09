@@ -70,7 +70,7 @@ class Product:
         return self
 
     
-    """def importProduct(self):
+    def importProduct(self):
         for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
             path = file
         self.productName = path.split("\\")[2].split(".")[0]
@@ -83,7 +83,7 @@ class Product:
             for opinion in opinions:
                 self.opinions.append(Opinion(**opinion))
 
-        return self"""
+        return self
 
     def importProductFromDB(self):
         for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):

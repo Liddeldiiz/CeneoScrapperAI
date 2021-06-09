@@ -2,9 +2,10 @@
 
 {% block middle %}
     <h3 class="title"> {{ productBrand }}</h3>
+    <p> You have reached the brand.html file </p>
     <ul class="productList">
-        {% for productID in productsList %}
-            <li><a href="{{url_for('product', productBrand=productBrand, productID=productID)}}" >{{ productID }}</a></li>
+        {% for product in DB_Products_model %}
+            <li><a href="{{url_for('product', productBrand=productBrand, product=product)}}" >{{ product }}</a></li>
         {% endfor %}
     </ul>
 {% endblock middle %}
