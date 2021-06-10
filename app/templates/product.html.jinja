@@ -3,13 +3,17 @@
 {% block left %}
 {% endblock left %}
 
-{% block middle %}  
+{% block middle %} 
     <h2> {{ productBrand }} </h2>
     <h2> {{  product  }} </h2>
     <button class="fun">Export HTML table to CSV file</button>
     {% for table in tables %}
         {{ table | safe }}
     {% endfor %}
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
 {% endblock middle %}
 {% block scripts %}
 <script>
@@ -65,6 +69,34 @@
         var html = document.querySelector("table").outerHTML;
         export_table_to_csv(html, "table.csv");
     });
+</script>
+<script>
+    const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    ];
+    const data = {
+    labels: labels,
+    datasets: [{
+        label: 'My First dataset',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: [0, 10, 5, 2, 20, 30, 45],
+    }]
+    };
+    const config = {
+    type: 'line',
+    data,
+    options: {}
+    };
+    var myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+    );
 </script>
 
 {% endblock scripts %}
