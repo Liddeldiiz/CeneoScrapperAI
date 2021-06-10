@@ -20,12 +20,16 @@ class Product:
     url_pre = 'https://www.ceneo.pl'
     url_post = '#tab=reviews'
 
-    def __init__(self, productID=None, productName=None, directory=None, productModel=None, opinions=[]):
+    def __init__(self, productID=None, productName=None, directory=None, productModel=None, opinions=[], averageScore=None, opinionsCount=None, prosCount=None, consCount=None):
         self.productID = productID
         self.productName = productName
         self.directory = directory
         self.productModel = productModel
-        self.opinions = opinions
+        self.opinions = opinions.copy()
+        self.averageScore = averageScore
+        self.opinionsCount = opinionsCount
+        self.prosCount = prosCount
+        self.consCount = consCount
 
     def opinionsPageURL(self):
         return self.url_pre + '/' + self.productID + self.url_post
@@ -47,12 +51,24 @@ class Product:
             except TypeError:
                 url = None
         
+    def countProductStatistics(self):
+        opinions = self.opinionsToDataFrame()
+        self.averageScore = opinions['stars'].mean()
+        self.opinionsCount = len(self.opinions)
+        self.prosCount = opinions['advantages'].count()
+        self.consCount = opinions['disadvantages'].count()
+        
+
 
     def exportProduct(self):
         # EAFP - Easier to Ask for Forgivness than Permission
+        print("exportProduct, productName: ", self.productName)
         self.directory = self.productName.split()[0]
         directoryVar = len(self.directory)+1
         self.productModel = self.productName[directoryVar:]
+        #productName = self.productName.split()[1]
+        #brand = self.productName.split()[0]
+        #print(self.productID)
         try:
             self.productModel = self.productModel.replace('/', '-') # If the product name contains "/" such a symbol at can be interpreted by the progam as a directory backslash?
         except AttributeError:
@@ -86,16 +102,16 @@ class Product:
         return self
 
     def importProductFromDB(self):
-        """for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
+        for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
             path = file
         self.productName = path.split("\\")[2].split(".")[0]
         self.directory = path.split("\\")[1]
         brand = self.productName.split()[0]
-        #print("The brand is:", brand)
+        print("The brand is:", brand)
         brandModel = self.productName.split()[1]
         #print("The model is:", brandModel)
         self.productModel = brandModel
-        self.productName = brand"""
+        self.productName = brand
 
         
         tempProduct = Query()

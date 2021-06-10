@@ -47,6 +47,7 @@ def extract():
         respons = requests.get(product.opinionsPageURL())
         if respons.status_code == 200:
             product.extractProduct()
+            product.countProductStatistics()
             product.exportProduct()
             return redirect(url_for('extractedProduct', productID=product.productID))
         else:
@@ -116,7 +117,7 @@ def product(productBrand, product):
     #labels = [row[0] for row in stars]
     #values = [row[1] for row in stars]
     
-    return render_template('product.html.jinja', productBrand=productBrand, product=product, tables=[opinions.to_html(classes='table table-striped table-sm table-responsive display', table_id="opinions")])
+    return render_template('product.html.jinja', productBrand=productBrand, product=product, tables=[opinions.to_html(classes='table table-striped table-sm table-responsive', table_id="opinions")])
     #stars=stars, 
     #redomendations=redomendations, 
     #averageScore=averageScore,

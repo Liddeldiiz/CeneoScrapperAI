@@ -6,15 +6,15 @@
 {% block middle %}  
     <h2> {{ productBrand }} </h2>
     <h2> {{  product  }} </h2>
+    <button class="fun">Export HTML table to CSV file</button>
     {% for table in tables %}
-        {{ tables | safe }}
+        {{ table | safe }}
     {% endfor %}
-    <button>Export HTML table to CSV file</button>
 {% endblock middle %}
 {% block scripts %}
 <script>
       $(document).ready(function(){
-          $('#opinionTable').DataTable();
+          $('#opinions').DataTable();
       });
 </script>
 <script>
