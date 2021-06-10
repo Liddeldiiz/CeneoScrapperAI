@@ -5,18 +5,13 @@
         {{ table|safe }}
     {% endfor %}
     <canvas>
-        <img src="app\static\Graphs\POCO\X3 Pro 8-256GB Czarny_105040551\stars.png" alt="starsGraph">
+        <img src="app\static\Graphs\iPhone\stars.png" alt="starsGraph">
     </canvas>
 {% endblock middle %}
 {% block scripts %}
-    <script>
-        $(document).ready(function() {
-            $('#opinions').DataTable( {
-                "scrollY":        "600px",
-                "scrollCollapse": true,
-                "scrollX":        "600px",
-                "paging":         true
-            } );
-        } );
-    </script>
+<script>
+      $(document).ready(function(){
+          $('#opinionTable').DataTable();
+      });
+</script>
 {% endblock scripts %}

@@ -29,6 +29,6 @@ for item in descriptiveList_set:
     models_set = set(models)
     choicesList.append(item)
     choicesList.append(models_set)
-print(choicesList)
+#print(choicesList)
 n=0
 #print(choicesList)

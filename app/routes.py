@@ -31,7 +31,13 @@ app.config['SECRET_KEY'] = "NotSoSpecialSecretKey"
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('main.html.jinja')
+    requirements = []
+    with open("requirements.txt") as f:
+        line = f.readline()
+        while line:
+            line = f.readline()
+            requirements.append(line)
+    return render_template('main.html.jinja', requirements=requirements)
 
 @app.route('/extract', methods=['GET', 'POST'])
 def extract():
@@ -49,20 +55,25 @@ def extract():
 
 @app.route('/extractedProduct/<productID>')
 def extractedProduct(productID):
+    #print(productID)
     product = Product(productID)
+    #print(product)
     #opinions = product.importProduct().opinionsToDataFrame()
-    #product.createGraphs()
     opinions = product.importProductFromDB().opinionsToDataFrame()
+    #print("Product var in def extractedProduct:", product)
+    #product.createGraphs()
     #tables=[opinions.to_html(classes='table table-striped table-sm table-responsive display', table_id="opinions")]
     return render_template('extractedProduct.html.jinja', tables=[opinions.to_html(classes='table table-striped table-sm table-responsive display', table_id="opinions")])
 
 @app.route('/product/<productBrand>/<product>')
 def product(productBrand, product):
     productID = product.split()[1]
-    print(productID)
+    #print(productID)
 
     productToImport = Product(productID)
+    #print(productToImport)
     opinions = productToImport.importProductFromDB().opinionsToDataFrame()
+    #print("Product var in def product:", product)
     #with open("app/opinions/{}/{}.json".format(productBrand, product), encoding="cp437", errors="ignore") as f:
     #    d = json.load(f)
     
@@ -136,20 +147,21 @@ def products():
         brandIndex = int(request.form['brand'])
         productBrand = choicesList[brandIndex]
         productsIndex = int(request.form['products'])
-        print("This is the choicesList:", choicesList)
+        #print("This is the choicesList:", choicesList)
         products = choicesList[productsIndex]
-        print("These are the products:", products)
+        #print("These are the products:", products)
         productDB = Query()
         DB_Products_model = []
         counter = 0
         for item in products:
             result = db.search(productDB.model == item)
-            print(result[counter]['model'])
-            print(result[counter]['productID'])
-            DB_Products_model_ID = result[counter]['model'] + " " + result[counter]['productID']
-            DB_Products_model.append(DB_Products_model_ID)
-            counter+=1
-        print(DB_Products_model)
+            while counter < len(result):
+                #print(result[counter]['model'])
+                #print(result[counter]['productID'])
+                DB_Products_model_ID = result[counter]['model'] + " " + result[counter]['productID']
+                DB_Products_model.append(DB_Products_model_ID)
+                counter+=1
+        #print(DB_Products_model)
         return render_template('brands.html.jinja', productBrand=productBrand, DB_Products_model=DB_Products_model)
 
     return render_template('products.html.jinja', form=form, choicesList=choicesList)

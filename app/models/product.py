@@ -86,16 +86,16 @@ class Product:
         return self
 
     def importProductFromDB(self):
-        for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
+        """for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
             path = file
         self.productName = path.split("\\")[2].split(".")[0]
         self.directory = path.split("\\")[1]
         brand = self.productName.split()[0]
-        print("The brand is:", brand)
+        #print("The brand is:", brand)
         brandModel = self.productName.split()[1]
-        print("The model is:", brandModel)
+        #print("The model is:", brandModel)
         self.productModel = brandModel
-        self.productName = brand
+        self.productName = brand"""
 
         
         tempProduct = Query()
@@ -103,9 +103,9 @@ class Product:
         #print("This is the productID in the importProductFromDB function:", self.productID)
         #tempResult = db.search(product.productID == "94882813")
         result = db.search(tempProduct.productID == self.productID)
-        #print(result)
         self.productName = result[0]['Brand']
         opinions = result[0]['opinions']
+        #print(opinions[0])
         for opinion in opinions:
             self.opinions.append(Opinion(**opinion))
         
@@ -115,34 +115,38 @@ class Product:
         
 
     def createGraphs(self):
-        for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
-            path = file
-        self.productName = path.split("\\")[2].split(".")[0]
-        self.directory = path.split("\\")[1]
+        tempProduct = Query()
+        result = db.search(tempProduct.productID == self.productID)
+        #for file in glob.glob(f'app/opinions/**/*{self.productID}.json', recursive=True):
+        #    path = file
+        #self.productName = path.split("\\")[2].split(".")[0]
+        #self.directory = path.split("\\")[1]
 
-        with open("app/opinions/{}/{}.json".format(self.directory, self.productName), "r", encoding="UTF-8") as jf:
-                product = json.load(jf)
-                self.name = product['name']
-                opinions = json_normalize(product["opinions"])
-                
-                if os.path.isdir('app/static/Graphs/{}/{}'.format(self.directory, self.productName)) == True:
-                    stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
-                    ax = stars.plot.bar(color="lightskyblue")
-                    ax.set_title("Frequency of stars in opinons")
-                    ax.set_xlabel("Stars values")
-                    ax.set_ylabel("Number of opinions")
-                    #plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.productName))
-                else:
-                    parent_dir_graphs = "app/static/Graphs"
-                    path = os.path.join(parent_dir_graphs, self.directory, self.productName)
-                    os.makedirs(path)
+        #with open("app/opinions/{}/{}.json".format(self.directory, self.productName), "r", encoding="UTF-8") as jf:
+        product = result[0]
+        self.name = product['model']
+        self.directory = product['Brand']
+        opinions = json_normalize(product["opinions"])
+        print(opinions)
+        print(opinions['stars'])
+        if os.path.isdir('app/static/Graphs/{}/{}'.format(self.directory, self.name)) == True:
+            stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
+            ax = stars.plot.bar(color="lightskyblue")
+            ax.set_title("Frequency of stars in opinons")
+            ax.set_xlabel("Stars values")
+            ax.set_ylabel("Number of opinions")
+            #plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.name))
+        else:
+            parent_dir_graphs = "app/static/Graphs"
+            path = os.path.join(parent_dir_graphs, self.directory, self.name)
+            os.makedirs(path)
                     
-                    stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
-                    ax = stars.plot.bar(color="lightskyblue")
-                    ax.set_title("Frequency of stars in opinons")
-                    ax.set_xlabel("Stars values")
-                    ax.set_ylabel("Number of opinions")
-                    #plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.productName))
+            stars = opinions["stars"].value_counts().sort_index(ascending=True).reindex(np.arange(0, 5.5, 0.5).tolist(), fill_value=0)
+            ax = stars.plot.bar(color="lightskyblue")
+            ax.set_title("Frequency of stars in opinons")
+            ax.set_xlabel("Stars values")
+            ax.set_ylabel("Number of opinions")
+            #plt.savefig('app/static/Graphs/{}/{}/stars.png'.format(self.directory, self.name))
         return self
 
 
