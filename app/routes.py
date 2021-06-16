@@ -69,6 +69,7 @@ def extractedProduct(productID):
 @app.route('/product/<productBrand>/<product>')
 def product(productBrand, product):
     productID = product.split()[1]
+    print("print in terminal works")
     #print(productID)
 
     productToImport = Product(productID)
